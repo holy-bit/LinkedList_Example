@@ -103,15 +103,15 @@ typename List<E>::iterator List<E>::addAfter(const List<E>::iterator it, E&& ele
 }
 
 template <typename E>
-E& List<E>::remove(Node<E>& node)
+E& List<E>::remove(const iterator it)
 {
-	string log = "Deleted";
+	E log = *it;
 
-	cout << "\nElement(" << node.elem << ")Deleted" << endl;
+	cout << "\nElement(" << *it << ")Deleted" << endl;
 
-	node.next->prev = node.prev;
-	node.prev->next = node.next;
-	delete &node;
+	it.node_ptr->next->prev = it.node_ptr->prev;
+	it.node_ptr->prev->next = it.node_ptr->next;
+	delete *it;
 
 	size_--;
 
