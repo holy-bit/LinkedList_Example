@@ -40,8 +40,8 @@ public:
 		
 		iterator& operator++();
 		iterator& operator--() :
-		bool operator!=();
-		bool operator==();
+		bool operator!=(const iterator& it);
+		bool operator==(const iterator& it);
 		E& operator*();
 		E* operator->();
 		
@@ -52,11 +52,11 @@ public:
 
 	};
 	
-	List();
-	explicit List(const sdt::vector<E>&);
-	List(conts T[], const std::size_t);
-	List(const List&);
-	List(List&&);
+	List() = default;
+	//explicit List(const sdt::vector<E>&);
+	//List(const T[], const std::size_t);
+	List(const List<E>&);
+	List(List<E>&&);
 	iterator begin() const;
 	iterator end() const;
 
@@ -66,7 +66,7 @@ public:
 	iterator addLast(const E&&);
 	iterator addAfter(const iterator, const E&);
 	iterator addAfter(iterator, E&&);
-	E remove(const iterator);
+	E& remove(const iterator);
 	void clear();
 
 private:

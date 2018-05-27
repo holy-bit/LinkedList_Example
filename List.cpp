@@ -21,6 +21,24 @@ template<typename E>
 List<E>::iterator::iterator(Node* node_ptr): node_ptr { node_ptr } {}
 
 template<typename E>
+List<E>::iterator::iterator(const iterator& it) : node_ptr{ it.node_ptr } {}
+
+template<typename E>
+List<E>::iterator::iterator(const iterator&& it) : node_ptr{ move(it.node_ptr) } {}
+
+template<typename E>
+typename List<E>::iterator List<E>::iterator::operator=(const iterator& it) {
+	this.node_ptr = it.node_ptr;
+	return this;
+}
+
+template<typename E>
+typename List<E>::iterator List<E>::iterator::operator=(iterator&& it) {
+	this.node_ptr = move(it.node_ptr);
+	return this;
+}
+
+template<typename E>
 typename List<E>::iterator& List<E>::iterator::operator++()
 {
 	node_ptr = node_ptr->next;
@@ -38,13 +56,55 @@ E* List<E>::iterator::operator->() {
 	return &(node_ptr->elem);
 }
 
+template<typename E>
+bool List<E>::iterator::operator==(const List<E>::iterator& it)
+{
+	return this.node_ptr == it.node_ptr ? true : false;
+}
 
+template<typename E>
+bool List<E>::iterator::operator!=(const List<E>::iterator& it)
+{
+	return !(this == it) ? true : false;
+}
 
 ////////////////////// LIST /////////////////////////////////
+
+//Constructor de copia
+template<typename E>
+List<E>::List(List<E>& list) : size_{ list.size_ }, head{ list.head }, tail{ list.tail }
+{
+	List<E>::iterator it{ head };
+
+	for (int x = 0; x < size_; ++x) {
+		Node<E> node{ it.node_ptr->prev, *it, it.node_ptr->next };
+		++it;
+	}
+
+	cout << "List copied." << endl;
+}
+
+//Constructor de move
+template<typename E>
+List<E>::List(List<E>&& list) : size_{ list.size_ }, head{ list.head }, tail{ list.tail }
+{
+	list.head = nullptr;
+	list.tail = nullptr;
+	list.size_ = 0;
+
+	cout << "List moved." << endl;
+}
+
+
 
 template<typename E>
 inline typename List<E>::iterator List<E>::begin() const {
 		return iterator{ head };
+}
+
+template<typename E>
+inline typename List<E>::iterator List<E>::end() const {
+	return iterator{ tail };
 }
 
 template <typename E>
@@ -117,3 +177,10 @@ E& List<E>::remove(const iterator it)
 
 	return log;
 };
+
+template <typename E>
+void List<E>::clear() {
+
+}
+
+
