@@ -24,7 +24,7 @@ template<typename E>
 List<E>::iterator::iterator(const iterator& it) : node_ptr{ it.node_ptr } {}
 
 template<typename E>
-List<E>::iterator::iterator(const iterator&& it) : node_ptr{ move(it.node_ptr) } {}
+List<E>::iterator::iterator(iterator&& it) : node_ptr{ move(it.node_ptr) } {}
 
 template<typename E>
 typename List<E>::iterator List<E>::iterator::operator=(const iterator& it) {
@@ -57,13 +57,13 @@ E* List<E>::iterator::operator->() {
 }
 
 template<typename E>
-bool List<E>::iterator::operator==(const List<E>::iterator& it)
+bool List<E>::iterator::operator==(const iterator& it)
 {
 	return this.node_ptr == it.node_ptr ? true : false;
 }
 
 template<typename E>
-bool List<E>::iterator::operator!=(const List<E>::iterator& it)
+bool List<E>::iterator::operator!=(const iterator& it)
 {
 	return !(this == it) ? true : false;
 }
@@ -72,7 +72,7 @@ bool List<E>::iterator::operator!=(const List<E>::iterator& it)
 
 //Constructor de copia
 template<typename E>
-List<E>::List(List<E>& list) : size_{ list.size_ }, head{ list.head }, tail{ list.tail }
+List<E>::List(const List<E>& list) : size_{ list.size_ }, head{ list.head }, tail{ list.tail }
 {
 	List<E>::iterator it{ head };
 
@@ -114,7 +114,7 @@ inline typename List<E>::iterator List<E>::addFirst(const E& elem)
 }
 
 template <typename E>
-typename List<E>::iterator&  List<E>::addFirst(E&& elem)
+typename List<E>::iterator  List<E>::addFirst(E&& elem)
 {
 	head = new List<E>::Node{ nullptr, elem, head };
 
@@ -123,7 +123,7 @@ typename List<E>::iterator&  List<E>::addFirst(E&& elem)
 	++size_;
 	cout << "\nFirst:" << head->elem << endl;
 
-	return List<E>::iterator{ head };
+	return iteratar x{ head };
 }
 
 template <typename E>
@@ -144,13 +144,13 @@ typename List<E>::iterator List<E>::addLast(E&& elem)
 }
 
 template <typename E>
-inline typename List<E>::iterator List<E>::addAfter(const List<E>::iterator it, const E& elem)
+inline typename List<E>::iterator List<E>::addAfter(const iterator it, const E& elem)
 {
 	return addAfter(it,std::move(E{ elem }));
 }
 
 template <typename E>
-typename List<E>::iterator List<E>::addAfter(const List<E>::iterator it, E&& elem)
+typename List<E>::iterator List<E>::addAfter(const iterator it, E&& elem)
 {
 	List<E>::Node* n = new List<E>::Node{ it.node_ptr, elem, it.node_ptr->next };
 	it.node_ptr->next = n;
@@ -177,10 +177,10 @@ E& List<E>::remove(const iterator it)
 
 	return log;
 };
-
 template <typename E>
 void List<E>::clear() {
 
 }
+
 
 

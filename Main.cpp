@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "ListTools.h"
+#include "List.h"
 
 
 int main() {
@@ -11,9 +12,11 @@ int main() {
 	string numPositions[]{ "1","2","3","4","5","6","7" };
 
 	LinkedList<string> list{};
+	List<int> l{};
 
-	
-
+	int x{ 1 };
+	l.addFirst(move(x));
+	//cout << *it << endl;
 	Node<string>& firstnode = list.addFirst(numPositions[0]);
 	Node<string>& lastnode = list.addLast(numPositions[6]);
 

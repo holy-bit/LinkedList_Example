@@ -111,13 +111,13 @@ public:
 	private:
 		Node* iterator;
 
-	public:
+	/*public:
 		operator++();
 		operator*();
 		operator --();
 		operator ==();
 		operator !=();
-		operator ->();
+		operator ->(); */
 	};
 };
 

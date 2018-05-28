@@ -1,4 +1,8 @@
 #pragma once
+#include <cstddef>
+#include <string>
+#include <iostream>
+#include <vector>
 
 template<typename E>
 class List {
@@ -33,13 +37,13 @@ public:
 		friend class List;
 		iterator(const iterator&);
 		iterator(iterator&&);
-		~iterator
+		~iterator();
 		iterator operator=(const iterator&);
 		iterator operator=(iterator&&);
 
 		
 		iterator& operator++();
-		iterator& operator--() :
+		iterator& operator--();
 		bool operator!=(const iterator& it);
 		bool operator==(const iterator& it);
 		E& operator*();
@@ -63,7 +67,7 @@ public:
 	iterator addFirst(const E&);
 	iterator addFirst(E&&);
 	iterator addLast(const E&);
-	iterator addLast(const E&&);
+	iterator addLast(E&&);
 	iterator addAfter(const iterator, const E&);
 	iterator addAfter(iterator, E&&);
 	E& remove(const iterator);
