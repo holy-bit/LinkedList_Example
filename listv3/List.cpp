@@ -286,25 +286,7 @@ void List<E>::clear() {
 
 	
 }
-/*
-//Muestra los elementos a partir de un nodo
-template <typename E>
-bool ListTools::showListFromPoint(List<E>::iterator it)
-{
-	cout << "--" << *it << endl;
-	return ++it != nullptr ? showListFromPoint(it) : false;
-}
 
-
-//Muestra los elementos de una lista
-template <typename E>
-void ListTools::show(const List<E>& list) {
-	cout << "\n----List----" << endl;
-	if (!list.empty()) showListFromPoint(list.begin());
-	else cout << "List empty" << endl;
-	cout << endl;
-}
-*/
 
 template<typename E>
 inline typename void ListTools::show(List<E>& list)

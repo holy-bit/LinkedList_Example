@@ -1,0 +1,22 @@
+﻿  Main.cpp
+c:\users\versus\documents\repositorio\linkedlist\projectbeta\list.cpp(121): error C2672: 'std::empty': no matching overloaded function found
+  c:\users\versus\documents\repositorio\linkedlist\projectbeta\list.cpp(118): note: while compiling class template member function 'List<std::string>::iterator List<std::string>::addFirst(E &&)'
+          with
+          [
+              E=std::string
+          ]
+  c:\users\versus\documents\repositorio\linkedlist\projectbeta\main.cpp(18): note: see reference to function template instantiation 'List<std::string>::iterator List<std::string>::addFirst(E &&)' being compiled
+          with
+          [
+              E=std::string
+          ]
+  c:\users\versus\documents\repositorio\linkedlist\projectbeta\main.cpp(15): note: see reference to class template instantiation 'List<std::string>' being compiled
+c:\users\versus\documents\repositorio\linkedlist\projectbeta\list.cpp(121): error C2780: 'bool std::empty(std::initializer_list<_Elem>) noexcept': expects 1 arguments - 0 provided
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility(1506): note: see declaration of 'std::empty'
+c:\users\versus\documents\repositorio\linkedlist\projectbeta\list.cpp(121): error C2780: 'bool std::empty(const _Ty (&)[_Size]) noexcept': expects 1 arguments - 0 provided
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility(1500): note: see declaration of 'std::empty'
+c:\users\versus\documents\repositorio\linkedlist\projectbeta\list.cpp(121): error C2780: 'unknown-type std::empty(const _Container &)': expects 1 arguments - 0 provided
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility(1492): note: see declaration of 'std::empty'
+c:\users\versus\documents\repositorio\linkedlist\projectbeta\list.cpp(126): error C2065: 'iteratar': undeclared identifier
+c:\users\versus\documents\repositorio\linkedlist\projectbeta\list.cpp(126): error C2146: syntax error: missing ';' before identifier 'x'
+c:\users\versus\documents\repositorio\linkedlist\projectbeta\list.cpp(126): error C2065: 'x': undeclared identifier
