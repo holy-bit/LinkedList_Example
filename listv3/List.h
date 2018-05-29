@@ -53,9 +53,9 @@ public:
 		
 	private:
 		Node* node_ptr;
-		List*  list_prt;
+		Node*  tail;
 		iterator(Node*);
-		iterator(Node*,List<E>*);
+		iterator(Node*,Node*);
 
 
 	};
@@ -101,8 +101,6 @@ private:
 
 class ListTools{
 public:
-	template<typename E>
-	bool showListFromPoint(typename List<E>::iterator);
 	template<typename E>
 	void show(List<E>&);
 	

@@ -1,46 +1,53 @@
 #include "List.h"
 
-
+//Constructor de copia de un nodo
 template<typename E>
 List<E>::Node::Node(Node* prev, const E& elem, Node* next) : 
-	//List(prev, std::move(E{ elem }), next)
 	prev{ prev }, elem{ elem }, next{ next }
 
 {}
 
 
-
+//Constructor de move de un nodo
 template<typename E>
 List<E>::Node::Node(Node *prev, E&& elem, Node* next) :
-	//List(prev, std::move(E{ elem }), next)
 	prev{ prev }, elem{ elem }, next{ next }
 
 {}
 
+/////////////////////// ITERATOR ////////////////////////
+
+//Contructor estandar
 template<typename E>
 List<E>::iterator::iterator(Node* node_ptr): node_ptr { node_ptr } {}
 
+//Constructor para end.
 template<typename E>
-List<E>::iterator::iterator(Node* node_ptr,List<E>* list) : node_ptr{ node_ptr }, list_ptr{list} {}
+List<E>::iterator::iterator(Node* node_ptr,Node* tail) : node_ptr{ node_ptr }, tail{tail} {}
 
+//Constructor de copia
 template<typename E>
 List<E>::iterator::iterator(const iterator& it) : node_ptr{ it.node_ptr } {}
 
+//Constructor de move
 template<typename E>
 List<E>::iterator::iterator(iterator&& it) : node_ptr{ move(it.node_ptr) } {}
 
+//Operador de copia
 template<typename E>
 typename List<E>::iterator List<E>::iterator::operator=(const iterator& it) {
 	node_ptr = it.node_ptr;
 	return *this;
 }
 
+//Operador de move
 template<typename E>
 typename List<E>::iterator List<E>::iterator::operator=(iterator&& it) {
 	this.node_ptr = move(it.node_ptr);
 	return this;
 }
 
+//Operador para pasar al siguiente elemento
 template<typename E>
 typename List<E>::iterator& List<E>::iterator::operator++()
 {
@@ -48,31 +55,37 @@ typename List<E>::iterator& List<E>::iterator::operator++()
 	return *this;
 } 
 
+//Operador para pasar al anterior elemento
 template<typename E>
 typename List<E>::iterator& List<E>::iterator::operator--()
 {
-	if (node_ptr == nullptr) return List<E>::iterator{ list_prt.tail };
-	node_ptr = node_ptr->prev;
+	if (node_ptr != nullptr) 
+		node_ptr = node_ptr->prev;
+	else node_ptr = tail;
 	return *this;
 }
 
+//Muestra el elemento del nodo
 template<typename E>
 E& List<E>::iterator::operator*()
 {
 	return node_ptr->elem;
 }
 
+//Puntero al elemento del nodo.
 template<typename E>
 E* List<E>::iterator::operator->() {
 	return &(node_ptr->elem);
 }
 
+//Operador de comparacion ==
 template<typename E>
 bool List<E>::iterator::operator==(const iterator& it)
 {
 	return node_ptr == it.node_ptr ;
 }
 
+//Operador de desingualdad !=
 template<typename E>
 bool List<E>::iterator::operator!=(const iterator& it)
 {
@@ -107,15 +120,16 @@ List<E>::List(List<E>&& list) : size_{ list.size_ }, head{ list.head }, tail{ li
 }
 
 
-
+//Marca el primer elemento
 template<typename E>
 inline typename List<E>::iterator List<E>::begin() const {
 		return iterator{ head };
 }
 
+//Marca la siguiente posicion a tail
 template<typename E>
 inline typename List<E>::iterator List<E>::end() const {
-	return iterator { nullptr, this };
+	return iterator { nullptr, tail };
 }
 
 //Cambia el elemento del nodo por uno nuevo.
@@ -130,13 +144,14 @@ E& List<E>::setElem(iterator& it, const E& elem)
 	return x;
 }
 
-
+//Añade el primer elemento haciendo una copia.
 template <typename E>
 inline typename List<E>::iterator List<E>::addFirst(const E& elem)
 {
 	return addFirst(std::move(E{ elem }));
 }
 
+//Añade el primer elemento haciend move
 template <typename E>
 typename List<E>::iterator  List<E>::addFirst(E&& elem)
 {
@@ -150,12 +165,14 @@ typename List<E>::iterator  List<E>::addFirst(E&& elem)
 	return iterator { head };
 }
 
+//Añade el primer elemento haciendo una copia.
 template <typename E>
 inline typename List<E>::iterator List<E>::addLast(const E& elem)
 {
 	return addLast(std::move(E{ elem }));
 }
 
+//Añade el primer elemento haciendo move.
 template <typename E>
 typename List<E>::iterator List<E>::addLast(E&& elem)
 {
@@ -167,12 +184,14 @@ typename List<E>::iterator List<E>::addLast(E&& elem)
 	return List<E>::iterator{ tail };
 }
 
+//Añade un elemento despues de la posicion del iterator haciendo una copia.
 template <typename E>
 inline typename List<E>::iterator List<E>::addAfter(const iterator it, const E& elem)
 {
 	return addAfter(it,std::move(E{ elem }));
 }
 
+//Añade un elemento despues de la posicion del iterator haciendo move.
 template <typename E>
 typename List<E>::iterator List<E>::addAfter(const iterator it, E&& elem)
 {
@@ -187,12 +206,14 @@ typename List<E>::iterator List<E>::addAfter(const iterator it, E&& elem)
 	return List<E>::iterator{ n };
 }
 
+//Añade un elemento antes de la posicion del iterator haciendo una copia.
 template <typename E>
 inline typename List<E>::iterator List<E>::addBefore(const iterator it, const E& elem)
 {
 	return addBefore(it, std::move(E{ elem }));
 }
 
+//Añade un elemento anter de la posicion del iterator haciendo move.
 template <typename E>
 typename List<E>::iterator List<E>::addBefore(const iterator it, E&& elem)
 {
@@ -228,6 +249,7 @@ void List<E>::operator=(const List<E>& list) {
 	cout << "List copied." << endl;
 }
 
+//Operador de move
 template <typename E>
 void List<E>::operator=(List<E>&& list) {
 	head = list.head;
@@ -241,7 +263,7 @@ void List<E>::operator=(List<E>&& list) {
 	cout << "List moved." << endl;
 }
 
-
+//Borrado de un elemento
 template <typename E>
 E& List<E>::remove(iterator& it)
 {
@@ -269,6 +291,8 @@ E& List<E>::remove(iterator& it)
 
 	return log;
 }
+
+//Limpia la lista entera
 template <typename E>
 void List<E>::clear() {
 
@@ -287,17 +311,16 @@ void List<E>::clear() {
 		--size_;		
 }
 
-
+//Muestra todos los elementos de la lista.
 template<typename E>
 inline typename void ListTools::show(List<E>& list)
 {
-	if (!list.empty()) {
-	List<E>::iterator it{ list.begin() };
-
-	for (size_t i = 0; i < list.size(); i++) {
-		cout <<"--" <<*it << endl;
-			++it;
-	}
+	if (!list.empty())
+	{	
+		for (List<E>::iterator it{ list.begin() }; it != list.end(); ++it)
+		{
+			cout <<"--" <<*it << endl;
+		}
 	}
 	else cout << "List is empty" << endl;
 

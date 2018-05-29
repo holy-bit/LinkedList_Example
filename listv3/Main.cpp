@@ -1,3 +1,6 @@
+
+//https://gitlab.com/Holy-Bit/LinkedList
+
 #include <cstddef>
 #include <string>
 #include <iostream>
@@ -11,39 +14,15 @@ using namespace std;
 
 
 int main() {
-	//char input;
+
 	ListTools tools;
 
 	string numPositions[]{ "1","2","3","4","5","6","7" };
 
 
-	
-	cout << "---1.string,2.int---" << endl;
-	//cin >> input;
-	/*
-	switch (input)
-	{
-	case'1':
-		List<string> list{};
-		List<string>::iterator first{ list.addFirst(numPositions[0]) };
-		List<string>::iterator last{ list.addLast(numPositions[6]) };
-		break;
-	case'2':
-		
-		List<int> list{};
-		List<int>::iterator first{ list.addFirst(numPositions[0]) };
-		List<int>::iterator last{ list.addLast(numPositions[6]) };
-		break;
-	default:
-		break;
-	}*/
-
 	List<string> list{};
 	List<string>::iterator first{ list.addFirst(numPositions[0]) };
 	List<string>::iterator last{ list.addLast(numPositions[6]) };
-
-
-	//cout << *last << endl;
 
 	
 	
@@ -89,7 +68,7 @@ int main() {
 	cout << "\n2)" << endl;
 	tools.show(list2);
 	
-	cout << "---Pruebas de funcion Find---" << endl;
+	cout << "---Pruebas de Borrado---" << endl;
 
 	//find(list2, (string)"4");
 	list2.remove(first);
