@@ -1,5 +1,14 @@
 ﻿  Main.cpp
-c:\users\versus\documents\repositorio\linkedlist\listv3\main.cpp(14): warning C4101: 'input': unreferenced local variable
-c:\users\versus\documents\repositorio\linkedlist\listv3\list.cpp(127): warning C4172: returning address of local variable or temporary: x
-  listv3.vcxproj -> C:\Users\Versus\Documents\Repositorio\LinkedList\listv3\x64\Debug\listv3.exe
-  listv3.vcxproj -> C:\Users\Versus\Documents\Repositorio\LinkedList\listv3\x64\Debug\listv3.pdb (Partial PDB)
+c:\users\luisc\documents\repositorio\list\listv3\list.cpp(118): error C2440: 'initializing': cannot convert from 'initializer list' to 'List<std::string>::iterator'
+  c:\users\luisc\documents\repositorio\list\listv3\list.cpp(118): note: No constructor could take the source type, or constructor overload resolution was ambiguous
+  c:\users\luisc\documents\repositorio\list\listv3\list.cpp(117): note: while compiling class template member function 'List<std::string>::iterator List<std::string>::end(void) const'
+  c:\users\luisc\documents\repositorio\list\listv3\main.cpp(60): note: see reference to function template instantiation 'List<std::string>::iterator List<std::string>::end(void) const' being compiled
+  c:\users\luisc\documents\repositorio\list\listv3\main.cpp(41): note: see reference to class template instantiation 'List<std::string>' being compiled
+c:\users\luisc\documents\repositorio\list\listv3\list.cpp(54): error C2228: left of '.tail' must have class/struct/union
+  c:\users\luisc\documents\repositorio\list\listv3\list.cpp(54): note: type is 'List<std::string> *'
+  c:\users\luisc\documents\repositorio\list\listv3\list.cpp(54): note: did you intend to use '->' instead?
+  c:\users\luisc\documents\repositorio\list\listv3\list.cpp(53): note: while compiling class template member function 'List<std::string>::iterator &List<std::string>::iterator::operator --(void)'
+  c:\users\luisc\documents\repositorio\list\listv3\main.cpp(60): note: see reference to function template instantiation 'List<std::string>::iterator &List<std::string>::iterator::operator --(void)' being compiled
+  c:\users\luisc\documents\repositorio\list\listv3\main.cpp(42): note: see reference to class template instantiation 'List<std::string>::iterator' being compiled
+  List.cpp
+  Generating Code...

@@ -53,7 +53,9 @@ public:
 		
 	private:
 		Node* node_ptr;
+		List*  list_prt;
 		iterator(Node*);
+		iterator(Node*,List<E>*);
 
 
 	};

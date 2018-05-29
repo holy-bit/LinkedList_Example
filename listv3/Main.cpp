@@ -11,7 +11,7 @@ using namespace std;
 
 
 int main() {
-	char input;
+	//char input;
 	ListTools tools;
 
 	string numPositions[]{ "1","2","3","4","5","6","7" };
@@ -57,11 +57,10 @@ int main() {
 	
 	list.setElem(first, "first");
 
+	list.remove(--list.end());
 	tools.show(list);
 
-	//list.remove(list.end());
-	
-	//list.clear();
+
 	cout << "---Contructor de copia---" << endl;
 	List<string> list2{ list };
 	cout << "\n1)" << endl;
@@ -93,6 +92,11 @@ int main() {
 	cout << "---Pruebas de funcion Find---" << endl;
 
 	//find(list2, (string)"4");
+	list2.remove(first);
+
+	list2.clear();
+
+	tools.show(list);
 
 	cin.get();
 }

@@ -21,6 +21,9 @@ template<typename E>
 List<E>::iterator::iterator(Node* node_ptr): node_ptr { node_ptr } {}
 
 template<typename E>
+List<E>::iterator::iterator(Node* node_ptr,List<E>* list) : node_ptr{ node_ptr }, list_ptr{list} {}
+
+template<typename E>
 List<E>::iterator::iterator(const iterator& it) : node_ptr{ it.node_ptr } {}
 
 template<typename E>
@@ -29,7 +32,7 @@ List<E>::iterator::iterator(iterator&& it) : node_ptr{ move(it.node_ptr) } {}
 template<typename E>
 typename List<E>::iterator List<E>::iterator::operator=(const iterator& it) {
 	node_ptr = it.node_ptr;
-	return this;
+	return *this;
 }
 
 template<typename E>
@@ -48,7 +51,7 @@ typename List<E>::iterator& List<E>::iterator::operator++()
 template<typename E>
 typename List<E>::iterator& List<E>::iterator::operator--()
 {
-	if (node_ptr == nullptr) return List<E>::iterator{tail}
+	if (node_ptr == nullptr) return List<E>::iterator{ list_prt.tail };
 	node_ptr = node_ptr->prev;
 	return *this;
 }
@@ -112,7 +115,7 @@ inline typename List<E>::iterator List<E>::begin() const {
 
 template<typename E>
 inline typename List<E>::iterator List<E>::end() const {
-	return iterator{ nullptr };
+	return iterator { nullptr, this };
 }
 
 //Cambia el elemento del nodo por uno nuevo.
@@ -272,19 +275,16 @@ void List<E>::clear() {
 
 		List<E>::iterator it{ begin() };
 		List<E>::iterator temp{ begin() };
-		/*for (it; it != end(); ++it) {
-			cout << "--" << *it << endl;
-			
-		}*/
-		while (it.node_ptr != tail) {
+		while (size() > 1) {
 			temp = it;
-			++it;
-			remove(temp.node_ptr);
-			
-		}
-	
+			it = ++it;
+			remove(temp);
 
-	
+		}
+		
+		head = nullptr;
+		tail = nullptr;
+		--size_;		
 }
 
 
