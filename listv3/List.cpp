@@ -205,6 +205,39 @@ typename List<E>::iterator List<E>::addBefore(const iterator it, E&& elem)
 	return List<E>::iterator{ n };
 }
 
+//Operador de copia
+template <typename E>
+void List<E>::operator=(const List<E>& list) {
+	if (this != &list)
+	{
+		head = list.head;
+		tail = list.tail;
+		size_ = list.size_;
+		List<E>::iterator it{ head };
+
+		for (int x = 0; x < size_; ++x) 
+		{
+			Node node{ it.node_ptr->prev, *it, it.node_ptr->next };
+			++it;
+		}
+	}
+	
+	cout << "List copied." << endl;
+}
+
+template <typename E>
+void List<E>::operator=(List<E>&& list) {
+	head = list.head;
+	tail = list.tail;
+	size_ = list.size_;
+
+	list.head = nullptr;
+	list.tail = nullptr;
+	list.size_ = 0;
+
+	cout << "List moved." << endl;
+}
+
 
 template <typename E>
 E& List<E>::remove(iterator& it)
@@ -262,7 +295,7 @@ bool ListTools::showListFromPoint(List<E>::iterator it)
 	return ++it != nullptr ? showListFromPoint(it) : false;
 }
 
-/*
+
 //Muestra los elementos de una lista
 template <typename E>
 void ListTools::show(const List<E>& list) {

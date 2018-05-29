@@ -79,6 +79,12 @@ public:
 	iterator addAfter(iterator, E&&);
 	iterator addBefore(const iterator, const E&);
 	iterator addBefore(iterator, E&&);
+
+	//Operador de copia
+	void operator=(const List<E>&);
+
+	void operator=(List<E>&&);
+		
 	E& remove(iterator&);
 	void clear();
 

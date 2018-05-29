@@ -1,0 +1,5 @@
+﻿  Main.cpp
+c:\users\versus\documents\repositorio\linkedlist\listv3\main.cpp(14): warning C4101: 'input': unreferenced local variable
+c:\users\versus\documents\repositorio\linkedlist\listv3\list.cpp(127): warning C4172: returning address of local variable or temporary: x
+  listv3.vcxproj -> C:\Users\Versus\Documents\Repositorio\LinkedList\listv3\x64\Debug\listv3.exe
+  listv3.vcxproj -> C:\Users\Versus\Documents\Repositorio\LinkedList\listv3\x64\Debug\listv3.pdb (Partial PDB)
