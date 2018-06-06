@@ -22,6 +22,8 @@ int main() {
 
 	List<string> list{};
 	List<string>::iterator first{ list.addFirst(numPositions[0]) };
+	List<string> list2{};
+	List<string>::iterator first2{ list2.addFirst(numPositions[0]) };
 	List<string>::iterator last{ list.addLast(numPositions[6]) };
 
 	
@@ -41,7 +43,7 @@ int main() {
 
 
 	cout << "---Contructor de copia---" << endl;
-	List<string> list2{ list };
+//	List<string> list2{ list };
 	cout << "\n1)" << endl;
 	tools.show(list);
 	cout << "\n2)" << endl;
@@ -55,15 +57,15 @@ int main() {
 	tools.show(list2);
 	cout << "---Operador = de copia---" << endl;
 	list = list2;
-	cout << "\n1)" << endl;
+	cout << "\n"<<list.id<< ")" << endl;
 	tools.show(list);
-	cout << "\n2)" << endl;
+	cout << "\n" << list2.id << ")" << endl;
 	tools.show(list2);
 
 
 	cout << "---Operador = de move---" << endl;
 	list2 = move(list);
-	cout << "\n1)" << endl;
+	cout << "\n)" << endl;
 	tools.show(list);
 	cout << "\n2)" << endl;
 	tools.show(list2);

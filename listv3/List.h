@@ -5,11 +5,13 @@
 #include <vector>
 #ifndef LIST
 #define LIST
+
+
+
 template<typename E>
 class List {
 
 private:
-
 	class Node {
 	public:
 
@@ -54,13 +56,15 @@ public:
 	private:
 		Node* node_ptr;
 		Node*  tail;
-		iterator(Node*);
+		size_t id;
+		iterator(Node*, size_t);
 		iterator(Node*,Node*);
 
 
 	};
 	
-	List() = default;
+	size_t id; //ID de la lista
+	List();
 	//explicit List(const sdt::vector<E>&);
 	//List(const T[], const std::size_t);
 	List(const List<E>&);
@@ -90,11 +94,19 @@ public:
 	E& remove(iterator&);
 	void clear();
 
+	
+
+
+	static size_t IdGenerator();
+
+
 private:
 
 	size_t size_; //Tamaño de la lista
 	Node*  head; //Primer nodo de la lista
 	Node*  tail; //Ultimo nodo de la lista
+
+	static size_t IdCount;
 
 };
 
@@ -105,6 +117,7 @@ public:
 	void show(List<E>&);
 	
 };
+
 
 #endif
 

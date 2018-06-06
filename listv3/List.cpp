@@ -1,5 +1,6 @@
 #include "List.h"
 
+
 //Constructor de copia de un nodo
 template<typename E>
 List<E>::Node::Node(Node* prev, const E& elem, Node* next) : 
@@ -19,19 +20,18 @@ List<E>::Node::Node(Node *prev, E&& elem, Node* next) :
 
 //Contructor estandar
 template<typename E>
-List<E>::iterator::iterator(Node* node_ptr): node_ptr { node_ptr } {}
-
+List<E>::iterator::iterator(Node* node_ptr, size_t id): node_ptr { node_ptr },  id{ id } {}
 //Constructor para end.
 template<typename E>
 List<E>::iterator::iterator(Node* node_ptr,Node* tail) : node_ptr{ node_ptr }, tail{tail} {}
 
 //Constructor de copia
 template<typename E>
-List<E>::iterator::iterator(const iterator& it) : node_ptr{ it.node_ptr } {}
+List<E>::iterator::iterator(const iterator& it) : node_ptr{ it.node_ptr }, id{ it.id } {}
 
 //Constructor de move
 template<typename E>
-List<E>::iterator::iterator(iterator&& it) : node_ptr{ move(it.node_ptr) } {}
+List<E>::iterator::iterator(iterator&& it) : node_ptr{ move(it.node_ptr) }, id{ move(it.id) } {}
 
 //Operador de copia
 template<typename E>
@@ -94,11 +94,25 @@ bool List<E>::iterator::operator!=(const iterator& it)
 
 ////////////////////// LIST /////////////////////////////////
 
+// Generador del ID de las listas
+template <typename E>
+size_t List<E>::IdCount = 0;
+
+template <typename E>
+size_t List<E>::IdGenerator() {
+	return ++IdCount;
+}
+
+template<typename E>
+List<E>::List() { id = IdGenerator(); }
+
 //Constructor de copia
 template<typename E>
 List<E>::List(const List<E>& list) : size_{ list.size_ }, head{ list.head }, tail{ list.tail }
 {
-	List<E>::iterator it{ head };
+	
+	id = IdGenerator();
+	List<E>::iterator it{ head, id };
 
 	for (int x = 0; x < size_; ++x) {
 		Node node{ it.node_ptr->prev, *it, it.node_ptr->next };
@@ -123,7 +137,7 @@ List<E>::List(List<E>&& list) : size_{ list.size_ }, head{ list.head }, tail{ li
 //Marca el primer elemento
 template<typename E>
 inline typename List<E>::iterator List<E>::begin() const {
-		return iterator{ head };
+		return iterator{ head, id };
 }
 
 //Marca la siguiente posicion a tail
@@ -162,7 +176,7 @@ typename List<E>::iterator  List<E>::addFirst(E&& elem)
 	++size_;
 	cout << "\nFirst:" << head->elem << endl;
 
-	return iterator { head };
+	return iterator { head, id };
 }
 
 //Añade el primer elemento haciendo una copia.
@@ -181,7 +195,7 @@ typename List<E>::iterator List<E>::addLast(E&& elem)
 	else tail->prev->next = tail;
 	++size_;
 	cout << "\nLast: " << tail->elem << endl;
-	return List<E>::iterator{ tail };
+	return List<E>::iterator{ tail, id };
 }
 
 //Añade un elemento despues de la posicion del iterator haciendo una copia.
@@ -203,7 +217,7 @@ typename List<E>::iterator List<E>::addAfter(const iterator it, E&& elem)
 		n->next->prev = n;
 	++size_;
 	cout << "\nAfter(" << n->prev->elem << "): " << n->elem << endl;
-	return List<E>::iterator{ n };
+	return List<E>::iterator{ n, id };
 }
 
 //Añade un elemento antes de la posicion del iterator haciendo una copia.
@@ -226,7 +240,7 @@ typename List<E>::iterator List<E>::addBefore(const iterator it, E&& elem)
 	++size_;
 
 	cout << "\nBefore(" << n->next->elem << "): " << n->elem << endl;
-	return List<E>::iterator{ n };
+	return List<E>::iterator{ n, id };
 }
 
 //Operador de copia
@@ -237,7 +251,7 @@ void List<E>::operator=(const List<E>& list) {
 		head = list.head;
 		tail = list.tail;
 		size_ = list.size_;
-		List<E>::iterator it{ head };
+		List<E>::iterator it{ head, id };
 
 		for (int x = 0; x < size_; ++x) 
 		{
@@ -310,6 +324,8 @@ void List<E>::clear() {
 		tail = nullptr;
 		--size_;		
 }
+
+
 
 //Muestra todos los elementos de la lista.
 template<typename E>
