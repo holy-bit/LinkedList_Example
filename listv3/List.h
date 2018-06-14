@@ -2,6 +2,7 @@
 #include <cstddef>
 #include <string>
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 #ifndef LIST
 #define LIST
@@ -55,10 +56,10 @@ public:
 		
 	private:
 		Node* node_ptr;
-		Node*  tail;
+		Node* prev;
 		size_t id;
 		iterator(Node*, size_t);
-		iterator(Node*,Node*);
+		iterator(Node*,Node*, size_t);
 
 
 	};
@@ -75,8 +76,6 @@ public:
 	iterator begin() const;
 	iterator end() const;
 
-	E& setElem(iterator&, const E&);
-
 	iterator addFirst(const E&);
 	iterator addFirst(E&&);
 	iterator addLast(const E&);
@@ -91,7 +90,7 @@ public:
 
 	void operator=(List<E>&&);
 		
-	E& remove(iterator&);
+	void remove(iterator&);
 	void clear();
 
 	

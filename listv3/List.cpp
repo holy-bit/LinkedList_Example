@@ -23,7 +23,7 @@ template<typename E>
 List<E>::iterator::iterator(Node* node_ptr, size_t id): node_ptr { node_ptr },  id{ id } {}
 //Constructor para end.
 template<typename E>
-List<E>::iterator::iterator(Node* node_ptr,Node* tail) : node_ptr{ node_ptr }, tail{tail} {}
+List<E>::iterator::iterator(Node* node_ptr, Node* prev, size_t id) : node_ptr{ node_ptr }, prev{ prev }, id{ id } {}
 
 //Constructor de copia
 template<typename E>
@@ -61,7 +61,7 @@ typename List<E>::iterator& List<E>::iterator::operator--()
 {
 	if (node_ptr != nullptr) 
 		node_ptr = node_ptr->prev;
-	else node_ptr = tail;
+	else node_ptr = prev;
 	return *this;
 }
 
@@ -82,7 +82,18 @@ E* List<E>::iterator::operator->() {
 template<typename E>
 bool List<E>::iterator::operator==(const iterator& it)
 {
-	return node_ptr == it.node_ptr ;
+#ifdef DEBUG
+	if ( id == it.id) {
+		return (node_ptr == it.node_ptr);
+	}
+	else throw std::invalid_argument("Nodes lists dont match");
+
+#endif // DEBUG
+
+#ifndef DEBUG
+	return node_ptr == it.node_ptr;
+#endif // !DEBUG
+	
 }
 
 //Operador de desingualdad !=
@@ -119,18 +130,17 @@ List<E>::List(const List<E>& list) : size_{ list.size_ }, head{ list.head }, tai
 		++it;
 	}
 
-	cout << "List copied." << endl;
 }
 
 //Constructor de move
 template<typename E>
-List<E>::List(List<E>&& list) : size_{ list.size_ }, head{ list.head }, tail{ list.tail }
+List<E>::List(List<E>&& list) : size_{ list.size_ }, head{ list.head }, tail{ list.tail }, id{ list.id }
 {
 	list.head = nullptr;
 	list.tail = nullptr;
 	list.size_ = 0;
+	list.id = 0;
 
-	cout << "List moved." << endl;
 }
 
 
@@ -143,20 +153,9 @@ inline typename List<E>::iterator List<E>::begin() const {
 //Marca la siguiente posicion a tail
 template<typename E>
 inline typename List<E>::iterator List<E>::end() const {
-	return iterator { nullptr, tail };
+	return iterator { nullptr, tail, id };
 }
 
-//Cambia el elemento del nodo por uno nuevo.
-template <typename E>
-E& List<E>::setElem(iterator& it, const E& elem)
-{
-	E x = elem;
-
-	cout << "\nElement(" << *it << ") changed to: " << elem << endl;
-	*it = elem;
-
-	return x;
-}
 
 //Añade el primer elemento haciendo una copia.
 template <typename E>
@@ -174,8 +173,6 @@ typename List<E>::iterator  List<E>::addFirst(E&& elem)
 	if (empty()) tail = head;
 	else head->next->prev = head;
 	++size_;
-	cout << "\nFirst:" << head->elem << endl;
-
 	return iterator { head, id };
 }
 
@@ -194,7 +191,6 @@ typename List<E>::iterator List<E>::addLast(E&& elem)
 	if (empty()) head = tail;
 	else tail->prev->next = tail;
 	++size_;
-	cout << "\nLast: " << tail->elem << endl;
 	return List<E>::iterator{ tail, id };
 }
 
@@ -216,7 +212,6 @@ typename List<E>::iterator List<E>::addAfter(const iterator it, E&& elem)
 	else
 		n->next->prev = n;
 	++size_;
-	cout << "\nAfter(" << n->prev->elem << "): " << n->elem << endl;
 	return List<E>::iterator{ n, id };
 }
 
@@ -238,8 +233,6 @@ typename List<E>::iterator List<E>::addBefore(const iterator it, E&& elem)
 	else
 		n->prev->next = n;
 	++size_;
-
-	cout << "\nBefore(" << n->next->elem << "): " << n->elem << endl;
 	return List<E>::iterator{ n, id };
 }
 
@@ -248,6 +241,7 @@ template <typename E>
 void List<E>::operator=(const List<E>& list) {
 	if (this != &list)
 	{
+		if(id==0) id = IdGenerator();
 		head = list.head;
 		tail = list.tail;
 		size_ = list.size_;
@@ -260,7 +254,6 @@ void List<E>::operator=(const List<E>& list) {
 		}
 	}
 	
-	cout << "List copied." << endl;
 }
 
 //Operador de move
@@ -269,21 +262,21 @@ void List<E>::operator=(List<E>&& list) {
 	head = list.head;
 	tail = list.tail;
 	size_ = list.size_;
+	id = list.id;
 
 	list.head = nullptr;
 	list.tail = nullptr;
 	list.size_ = 0;
+	id = 0;
 
-	cout << "List moved." << endl;
 }
 
 //Borrado de un elemento
 template <typename E>
-E& List<E>::remove(iterator& it)
+void List<E>::remove(iterator& it)
 {
-	E log = *it;
+	
 
-	cout << "\nElement(" << *it << ")Deleted" << endl;
 	if (it.node_ptr == head)
 	{
 		head = it.node_ptr->next;
@@ -301,9 +294,9 @@ E& List<E>::remove(iterator& it)
 	
 	delete it.node_ptr;
 
-	size_--;
+	--size_;
 
-	return log;
+	
 }
 
 //Limpia la lista entera

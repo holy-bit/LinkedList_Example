@@ -21,39 +21,44 @@ int main() {
 
 
 	List<string> list{};
+	cout << "---Add First---" << endl;
 	List<string>::iterator first{ list.addFirst(numPositions[0]) };
-	List<string> list2{};
-	List<string>::iterator first2{ list2.addFirst(numPositions[0]) };
+	//List<string> list2{};
+	//List<string>::iterator first2{ list2.addFirst(numPositions[0]) };
+	cout << "---Add Last---" << endl;
 	List<string>::iterator last{ list.addLast(numPositions[6]) };
 
 	
-	
+	cout << "---Show---" << endl;
 	tools.show(list);
 
-	
+	cout << "---Add some nodes---" << endl;
 	list.addAfter(list.addAfter(first, numPositions[1]), numPositions[2]);
 	list.addAfter(++list.addBefore(list.addBefore(last, numPositions[4]),numPositions[3]), numPositions[5]);
-
+	
+	cout << "---Show---" << endl;
 	tools.show(list);
 	
-	list.setElem(first, "first");
+	cout << "---Rename and delete last---" << endl;
+	*first = "first";
 
 	list.remove(--list.end());
+	cout << "---Show---" << endl;
 	tools.show(list);
 
 
 	cout << "---Contructor de copia---" << endl;
-//	List<string> list2{ list };
-	cout << "\n1)" << endl;
+	List<string> list2{ list };
+	cout << "\n" << list.id << ")" << endl;
 	tools.show(list);
-	cout << "\n2)" << endl;
+	cout << "\n" << list2.id << ")" << endl;
 	tools.show(list2);
 
 	cout << "---Contructor de move---" << endl;
 	List<string> list3{ move(list) };
-	cout << "\n1)" << endl;
+	cout << "\n" << list.id << ")" << endl;
 	tools.show(list);
-	cout << "\n2)" << endl;
+	cout << "\n" << list3.id << ")" << endl;
 	tools.show(list2);
 	cout << "---Operador = de copia---" << endl;
 	list = list2;
@@ -65,18 +70,20 @@ int main() {
 
 	cout << "---Operador = de move---" << endl;
 	list2 = move(list);
-	cout << "\n)" << endl;
+	cout << "\n" << list.id << ")" << endl;
 	tools.show(list);
-	cout << "\n2)" << endl;
+	cout << "\n" << list2.id << ")" << endl;
 	tools.show(list2);
 	
 	cout << "---Pruebas de Borrado---" << endl;
 
-	//find(list2, (string)"4");
+	cout << "---Delete First---" << endl;
 	list2.remove(first);
 
+	cout << "---Clear List---" << endl;
 	list2.clear();
 
+	cout << "---Show---" << endl;
 	tools.show(list);
 
 	cin.get();
